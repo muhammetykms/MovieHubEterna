@@ -1,10 +1,9 @@
 // Bu fonksiyon, mock veri dosyasından film ve oyuncu verilerini alır
 // ve MovieDTO ve CastDTO türlerine dönüştürerek döner.
 
-
 import {MovieDTO, CastDTO} from '../data/MoviesDTO';
 
-const mockData = require('../data/MockData.json');
+const mockData = require('../data/mockData.json');
 
 export const fetchMovies = (): MovieDTO[] => {
   return mockData.movies.map(
