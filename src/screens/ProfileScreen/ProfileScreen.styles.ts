@@ -9,12 +9,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 16,
-  },
   userName: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -30,6 +24,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     backgroundColor: '#007BFF',
     borderRadius: 20,
+    marginTop: 16, // Add space between the email and the button
   },
   editButtonText: {
     color: '#fff',
@@ -83,6 +78,14 @@ const styles = StyleSheet.create({
   },
   settingText: {
     fontSize: 16,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingLeft: 10,
+    borderRadius: 5,
   },
 });
 

@@ -7,6 +7,7 @@ import {ThemeProvider} from './src/theme/ThemeProvider';
 import TabNavigator from './src/navigation/TabNavigator';
 import MovieDetailScreen from './src/screens/MovieDetailScreen/MovieDetailScreen';
 import CastDetailScreen from './src/screens/CastDetailScreen/CastDetailScreen';
+import ProfileEditScreen from './src/screens/ProfileScreen/ProfileEditScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,11 @@ const App = () => {
               name="CastDetail"
               component={CastDetailScreen}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="ProfileEdit"
+              component={ProfileEditScreen}
+              options={{headerShown: true}}
             />
           </Stack.Navigator>
         </NavigationContainer>
