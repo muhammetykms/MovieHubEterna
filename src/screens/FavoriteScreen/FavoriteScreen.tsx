@@ -1,10 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  removeFavorite,
-  addFavorite,
-  saveFavoriteMovies,
-} from '../../redux/favoriteMoviesSlice';
+import {removeFavorite, addFavorite} from '../../redux/favoriteMoviesSlice';
 import {RootState} from '../../redux/store';
 import {useTheme} from '../../theme/ThemeProvider';
 import {
@@ -25,29 +21,17 @@ const FavoriteScreen = ({navigation}) => {
     (state: RootState) => state.favoriteMovies.favoriteMovies,
   );
   const {theme} = useTheme();
-  const [isRefreshing, setIsRefreshing] = React.useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Favori film ekleme
-  const handleAddFavorite = (movie: MovieDTO) => {
-    dispatch(addFavorite(movie)); // Favoriye ekle
-    console.log('After adding, current favorite movies:', favoriteMovies);
-  };
+  const handleAddFavorite = (movie: MovieDTO) => dispatch(addFavorite(movie));
+  const handleRemoveFavorite = (movieId: number) =>
+    dispatch(removeFavorite(movieId));
 
-  // Favori film silme
-  const handleRemoveFavorite = (movieId: number) => {
-    dispatch(removeFavorite(movieId)); // Favoriden sil
-    console.log('After removing, current favorite movies:', favoriteMovies);
-  };
-
-  // Pull to refresh fonksiyonu
   const onRefresh = () => {
     setIsRefreshing(true);
-    setTimeout(() => {
-      setIsRefreshing(false);
-    }, 1000);
+    setTimeout(() => setIsRefreshing(false), 1000);
   };
 
-  // Listede her bir filmi render etme
   const renderItem = ({item}: {item: MovieDTO}) => (
     <View style={[styles.card, {backgroundColor: theme.colors.cardBackground}]}>
       <TouchableOpacity
@@ -77,7 +61,6 @@ const FavoriteScreen = ({navigation}) => {
       <Text style={[styles.title, {color: theme.colors.text}]}>
         Favori Filmler
       </Text>
-
       {favoriteMovies.length > 0 ? (
         <FlatList
           data={favoriteMovies}
@@ -89,7 +72,7 @@ const FavoriteScreen = ({navigation}) => {
         />
       ) : (
         <Text style={[styles.emptyMessage, {color: theme.colors.text}]}>
-          No favorite movies added yet!
+          Henüz favori film eklemediniz!
         </Text>
       )}
     </SafeAreaView>
