@@ -22,7 +22,7 @@ const HomeScreen = ({navigation}) => {
   const flatListRef = useRef<FlatList>(null);
 
   const {theme} = useTheme();
-  const {favoriteMovies, addFavorite, removeFavorite} = useFavoriteMovies();
+  const {favoriteMovies, addFavorite} = useFavoriteMovies(); // Only add favorites here
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,10 +60,8 @@ const HomeScreen = ({navigation}) => {
   };
 
   const toggleFavorite = (movie: MovieDTO) => {
-    if (isFavorite(movie.id)) {
-      removeFavorite(movie.id);
-    } else {
-      addFavorite(movie);
+    if (!isFavorite(movie.id)) {
+      addFavorite(movie); // Add favorite only here
     }
   };
 
@@ -75,7 +73,7 @@ const HomeScreen = ({navigation}) => {
         ListHeaderComponent={
           <>
             <Text style={[styles.title, {color: theme.colors.text}]}>
-              En Yüksek Skora Sahip Filmler
+              Top 3
             </Text>
 
             <FlatList
@@ -89,12 +87,8 @@ const HomeScreen = ({navigation}) => {
                   <HeaderMovieCard
                     movie={item}
                     handleClick={() => navigateToMovieDetails(item)}
+                    onFavoritePress={() => toggleFavorite(item)} // Pass the function to the card
                   />
-                  <Text onPress={() => toggleFavorite(item)}>
-                    {isFavorite(item.id)
-                      ? 'Remove from Favorites'
-                      : 'Add to Favorites'}
-                  </Text>
                 </View>
               )}
               keyExtractor={item => item.id}

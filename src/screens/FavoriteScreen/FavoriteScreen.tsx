@@ -1,14 +1,22 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, StyleSheet, RefreshControl} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {MovieDTO} from '../../data/MoviesDTO';
-import MovieCard from '../../components/MovieCard/MovieCard';
 import {useFavoriteMovies} from '../../context/FavoriteMoviesContext';
+import {useTheme} from '../../theme/ThemeProvider'; // Tema context'ini import ediyoruz
+import styles from './FavoriteScreen.styles';
 
 const FavoriteScreen = ({navigation}) => {
-  const {favoriteMovies} = useFavoriteMovies(); // Favorileri context'ten alıyoruz
+  const {favoriteMovies, removeFavorite} = useFavoriteMovies(); // Favorileri context'ten alıyoruz
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  console.log('Favorite Movies:', favoriteMovies); // Konsolda favori filmleri kontrol ediyoruz
+  const {theme} = useTheme(); // Tema bilgilerini alıyoruz
 
   const navigateToMovieDetails = (movie: MovieDTO) => {
     navigation.navigate('Details', {movie});
@@ -21,50 +29,56 @@ const FavoriteScreen = ({navigation}) => {
     }, 1000);
   };
 
+  const handleRemoveFavorite = (movieId: number) => {
+    removeFavorite(movieId); // Favorilerden filmi çıkarıyoruz
+  };
+
+  const renderItem = ({item}: {item: MovieDTO}) => (
+    <View style={[styles.card, {backgroundColor: theme.colors.cardBackground}]}>
+      <TouchableOpacity
+        onPress={() => navigateToMovieDetails(item)}
+        style={styles.cardContent}>
+        <Image source={{uri: item.poster_path}} style={styles.poster} />
+        <View style={styles.textContainer}>
+          <Text style={[styles.movieTitle, {color: theme.colors.text}]}>
+            {item.original_title}
+          </Text>
+          <Text style={[styles.movieOverview, {color: theme.colors.text}]}>
+            {item.overview.slice(0, 100)}...
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => handleRemoveFavorite(item.id)}
+        style={[styles.removeButton, {backgroundColor: theme.colors.primary}]}>
+        <Text style={styles.removeButtonText}>Remove</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Favori Filmler</Text>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: theme.colors.background}]}>
+      <Text style={[styles.title, {color: theme.colors.text}]}>
+        Favori Filmler
+      </Text>
 
       {favoriteMovies.length > 0 ? (
         <FlatList
           data={favoriteMovies}
-          renderItem={({item}) => (
-            <MovieCard
-              key={item.id}
-              movie={item}
-              handleClick={() => navigateToMovieDetails(item)}
-            />
-          )}
+          renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }
         />
       ) : (
-        <Text style={styles.emptyMessage}>No favorite movies added yet!</Text>
+        <Text style={[styles.emptyMessage, {color: theme.colors.text}]}>
+          No favorite movies added yet!
+        </Text>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#121212',
-    padding: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 10,
-  },
-  emptyMessage: {
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: 20,
-  },
-});
 
 export default FavoriteScreen;
