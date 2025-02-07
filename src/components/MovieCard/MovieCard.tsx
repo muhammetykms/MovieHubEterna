@@ -1,20 +1,15 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
-import {MovieDTO} from '../../data/MoviesDTO';
-import {useFavoriteMovies} from '../../context/FavoriteMoviesContext';
+import {useDispatch} from 'react-redux'; // useDispatch import ediyoruz
+import {addFavorite} from '../../redux/favoriteMoviesSlice'; // Aksiyonları import ediyoruz
 import styles from './MovieCard.styles';
 import IMAGES from '../../assets';
+import {TouchableOpacity, View, Text, Image} from 'react-native';
 
-type MovieCardProps = {
-  movie: MovieDTO; // Movie objesi
-  handleClick: () => void; // Tıklama olayını yönlendiren fonksiyon
-};
-
-const MovieCard: React.FC<MovieCardProps> = ({movie, handleClick}) => {
-  const {addFavorite} = useFavoriteMovies(); // Favorilere eklemek için context'ten alıyoruz
+const MovieCard = ({movie, handleClick}) => {
+  const dispatch = useDispatch(); // Dispatch'i Redux'tan alıyoruz
 
   const handleAddToFavorite = () => {
-    addFavorite(movie); // Favorilere ekle
+    dispatch(addFavorite(movie)); // Redux store'a favori ekliyoruz
   };
 
   return (
@@ -26,7 +21,6 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, handleClick}) => {
         />
         <Text style={styles.title}>{movie.original_title}</Text>
         <Text style={styles.rating}>IMDB: {movie.vote_average}</Text>
-        {/* Favori ekleme butonunun eski haline döndürülmesi */}
         <TouchableOpacity
           onPress={handleAddToFavorite}
           style={styles.favoriteButton}>

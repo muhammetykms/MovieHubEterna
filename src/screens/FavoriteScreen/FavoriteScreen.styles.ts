@@ -63,6 +63,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{translateX: -25}, {translateY: -25}],
+    zIndex: 1,
+  },
 });
 
 export default styles;

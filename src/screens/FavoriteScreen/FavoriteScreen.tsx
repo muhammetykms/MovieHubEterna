@@ -1,42 +1,47 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {removeFavorite} from '../../redux/favoriteMoviesSlice';
+import {RootState} from '../../redux/store';
+import {useTheme} from '../../theme/ThemeProvider';
 import {
+  FlatList,
   View,
   Text,
-  FlatList,
   Image,
-  RefreshControl,
   TouchableOpacity,
+  SafeAreaView,
+  RefreshControl,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {MovieDTO} from '../../data/MoviesDTO';
-import {useFavoriteMovies} from '../../context/FavoriteMoviesContext';
-import {useTheme} from '../../theme/ThemeProvider'; // Tema context'ini import ediyoruz
 import styles from './FavoriteScreen.styles';
+import {MovieDTO} from '../../data/MoviesDTO';
 
 const FavoriteScreen = ({navigation}) => {
-  const {favoriteMovies, removeFavorite} = useFavoriteMovies(); // Favorileri context'ten alıyoruz
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const dispatch = useDispatch(); // Dispatch fonksiyonunu kullanıyoruz
+  const favoriteMovies = useSelector(
+    (state: RootState) => state.favoriteMovies.favoriteMovies,
+  ); // Redux store'dan favori filmleri alıyoruz
   const {theme} = useTheme(); // Tema bilgilerini alıyoruz
+  const [isRefreshing, setIsRefreshing] = React.useState(false); // Pull to refresh durumu
 
-  const navigateToMovieDetails = (movie: MovieDTO) => {
-    navigation.navigate('Details', {movie});
+  // Film favorilerden silme işlemi
+  const handleRemoveFavorite = (movieId: number) => {
+    dispatch(removeFavorite(movieId)); // Redux'dan removeFavorite aksiyonunu dispatch ediyoruz
   };
 
+  // OnRefresh fonksiyonu
   const onRefresh = () => {
     setIsRefreshing(true);
+    // Simüle edilen veri güncellenmesi için setTimeout kullanılıyor.
     setTimeout(() => {
-      setIsRefreshing(false); // Refresh işlemi sonlandı
-    }, 1000);
+      setIsRefreshing(false);
+    }, 1000); // 1 saniye sonra refresh tamamlanacak
   };
 
-  const handleRemoveFavorite = (movieId: number) => {
-    removeFavorite(movieId); // Favorilerden filmi çıkarıyoruz
-  };
-
+  // FlatList renderItem fonksiyonu
   const renderItem = ({item}: {item: MovieDTO}) => (
     <View style={[styles.card, {backgroundColor: theme.colors.cardBackground}]}>
       <TouchableOpacity
-        onPress={() => navigateToMovieDetails(item)}
+        onPress={() => navigation.navigate('Details', {movie: item})}
         style={styles.cardContent}>
         <Image source={{uri: item.poster_path}} style={styles.poster} />
         <View style={styles.textContainer}>

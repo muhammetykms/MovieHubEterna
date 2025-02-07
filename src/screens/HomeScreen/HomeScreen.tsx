@@ -8,7 +8,9 @@ import Pagination from '../../components/Pagination/Pagination';
 import {fetchMovies} from '../../services/MovieService';
 import {groupMoviesInPairs} from '../../utils/helpers';
 import {useTheme} from '../../theme/ThemeProvider';
-import {useFavoriteMovies} from '../../context/FavoriteMoviesContext'; // Import our context
+import {useDispatch, useSelector} from 'react-redux'; // useDispatch ve useSelector import ediyoruz
+import {RootState} from '../../redux/store'; // Redux store'dan erişim
+import {addFavorite} from '../../redux/favoriteMoviesSlice'; // Redux aksiyonu
 import styles from './HomeScreen.styles';
 
 const {width} = Dimensions.get('window');
@@ -22,7 +24,12 @@ const HomeScreen = ({navigation}) => {
   const flatListRef = useRef<FlatList>(null);
 
   const {theme} = useTheme();
-  const {favoriteMovies, addFavorite} = useFavoriteMovies(); // Only add favorites here
+
+  // Redux kullanarak favori filmleri ve aksiyonları alıyoruz
+  const favoriteMovies = useSelector(
+    (state: RootState) => state.favoriteMovies.favoriteMovies,
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +68,7 @@ const HomeScreen = ({navigation}) => {
 
   const toggleFavorite = (movie: MovieDTO) => {
     if (!isFavorite(movie.id)) {
-      addFavorite(movie); // Add favorite only here
+      dispatch(addFavorite(movie)); // Redux üzerinden addFavorite aksiyonunu dispatch ediyoruz
     }
   };
 
