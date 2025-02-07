@@ -3,6 +3,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {MovieDTO} from '../../data/MoviesDTO';
 import {useFavoriteMovies} from '../../context/FavoriteMoviesContext';
 import styles from './MovieCard.styles';
+import IMAGES from '../../assets';
 
 type MovieCardProps = {
   movie: MovieDTO; // Movie objesi
@@ -20,11 +21,7 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, handleClick}) => {
     <TouchableOpacity onPress={handleClick}>
       <View style={styles.card}>
         <Image
-          source={
-            movie.poster_path
-              ? {uri: movie.poster_path}
-              : require('../../assets/siyahbeyaz.jpeg')
-          }
+          source={movie.poster_path ? {uri: movie.poster_path} : IMAGES.ERROR}
           style={styles.poster}
         />
         <Text style={styles.title}>{movie.original_title}</Text>
