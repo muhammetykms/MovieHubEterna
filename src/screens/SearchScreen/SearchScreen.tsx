@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context'; // Import SafeAreaView
 import {MovieDTO} from '../../data/MoviesDTO';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -48,7 +49,7 @@ const SearchScreen = ({navigation}) => {
   const groupedMovies = groupMoviesInPairs(movies);
 
   return (
-    <View
+    <SafeAreaView
       style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <SearchBar onSearch={handleSearch} onClear={handleClear} />
 
@@ -64,7 +65,7 @@ const SearchScreen = ({navigation}) => {
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
