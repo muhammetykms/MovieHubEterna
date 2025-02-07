@@ -1,6 +1,10 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {removeFavorite} from '../../redux/favoriteMoviesSlice';
+import {
+  removeFavorite,
+  addFavorite,
+  saveFavoriteMovies,
+} from '../../redux/favoriteMoviesSlice';
 import {RootState} from '../../redux/store';
 import {useTheme} from '../../theme/ThemeProvider';
 import {
@@ -16,28 +20,34 @@ import styles from './FavoriteScreen.styles';
 import {MovieDTO} from '../../data/MoviesDTO';
 
 const FavoriteScreen = ({navigation}) => {
-  const dispatch = useDispatch(); // Dispatch fonksiyonunu kullanıyoruz
+  const dispatch = useDispatch();
   const favoriteMovies = useSelector(
     (state: RootState) => state.favoriteMovies.favoriteMovies,
-  ); // Redux store'dan favori filmleri alıyoruz
-  const {theme} = useTheme(); // Tema bilgilerini alıyoruz
-  const [isRefreshing, setIsRefreshing] = React.useState(false); // Pull to refresh durumu
+  );
+  const {theme} = useTheme();
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
 
-  // Film favorilerden silme işlemi
-  const handleRemoveFavorite = (movieId: number) => {
-    dispatch(removeFavorite(movieId)); // Redux'dan removeFavorite aksiyonunu dispatch ediyoruz
+  // Favori film ekleme
+  const handleAddFavorite = (movie: MovieDTO) => {
+    dispatch(addFavorite(movie)); // Favoriye ekle
+    console.log('After adding, current favorite movies:', favoriteMovies);
   };
 
-  // OnRefresh fonksiyonu
+  // Favori film silme
+  const handleRemoveFavorite = (movieId: number) => {
+    dispatch(removeFavorite(movieId)); // Favoriden sil
+    console.log('After removing, current favorite movies:', favoriteMovies);
+  };
+
+  // Pull to refresh fonksiyonu
   const onRefresh = () => {
     setIsRefreshing(true);
-    // Simüle edilen veri güncellenmesi için setTimeout kullanılıyor.
     setTimeout(() => {
       setIsRefreshing(false);
-    }, 1000); // 1 saniye sonra refresh tamamlanacak
+    }, 1000);
   };
 
-  // FlatList renderItem fonksiyonu
+  // Listede her bir filmi render etme
   const renderItem = ({item}: {item: MovieDTO}) => (
     <View style={[styles.card, {backgroundColor: theme.colors.cardBackground}]}>
       <TouchableOpacity

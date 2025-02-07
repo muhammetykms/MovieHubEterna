@@ -1,38 +1,84 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MovieDTO } from '../data/MoviesDTO'; // MovieDTO tipini import ediyoruz
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {MovieDTO} from '../../src/data/MoviesDTO';
 
-// Favori filmleri tutan state'in yapısı
+// Başlangıç durumu
 interface FavoriteMoviesState {
   favoriteMovies: MovieDTO[];
 }
 
-// Başlangıç durumu
 const initialState: FavoriteMoviesState = {
   favoriteMovies: [],
 };
 
-// createSlice ile reducer ve aksiyonları tanımlıyoruz
+// Redux slice'ı
 const favoriteMoviesSlice = createSlice({
-  name: 'favoriteMovies', // Slice adı
-  initialState, // Başlangıç durumu
+  name: 'favoriteMovies',
+  initialState,
   reducers: {
-    // Favori ekleme işlemi
+    // Favori filmleri set etme
+    setFavoriteMovies: (state, action: PayloadAction<MovieDTO[]>) => {
+      state.favoriteMovies = action.payload;
+    },
+
+    // Favori film ekleme
     addFavorite: (state, action: PayloadAction<MovieDTO>) => {
-      // Eğer film zaten favorilerdeyse eklemiyoruz
-      if (!state.favoriteMovies.find(movie => movie.id === action.payload.id)) {
+      const movieExists = state.favoriteMovies.some(
+        movie => movie.id === action.payload.id,
+      );
+      if (!movieExists) {
         state.favoriteMovies.push(action.payload);
+        console.log('Movie added to favorites:', action.payload); // Favoriye eklerken logla
+        saveFavoriteMovies(state.favoriteMovies); // Favoriyi AsyncStorage'a kaydet
+      } else {
+        console.log('Movie already in favorites:', action.payload); // Eğer film zaten favorilerdeyse logla
       }
     },
-    // Favori silme işlemi
+
+    // Favori film silme
     removeFavorite: (state, action: PayloadAction<number>) => {
-      state.favoriteMovies = state.favoriteMovies.filter(movie => movie.id !== action.payload);
+      const movieToRemove = state.favoriteMovies.find(
+        movie => movie.id === action.payload,
+      );
+      state.favoriteMovies = state.favoriteMovies.filter(
+        movie => movie.id !== action.payload,
+      );
+      console.log('Removed movie from favorites:', movieToRemove); // Favoriden silme sırasında logla
+      saveFavoriteMovies(state.favoriteMovies); // Favoriyi AsyncStorage'a kaydet
     },
   },
 });
 
-// Aksiyonları dışa aktarıyoruz
-export const { addFavorite, removeFavorite } = favoriteMoviesSlice.actions;
+// Favori filmleri AsyncStorage'a kaydetme
+export const saveFavoriteMovies = async (movies: MovieDTO[]) => {
+  try {
+    console.log('Saving favorite movies to AsyncStorage:', movies); // Veriyi kaydetmeden önce logla
+    const serializedMovies = JSON.stringify(movies); // JSON.stringify kullanarak veriyi düzgün formatta kaydedelim
+    await AsyncStorage.setItem('favoriteMovies', serializedMovies); // AsyncStorage'a kaydet
+    console.log('Favorite movies saved successfully!');
+  } catch (error) {
+    console.error('Error saving favorite movies to AsyncStorage:', error); // Hata olursa logla
+  }
+};
 
-// Reducer'ı dışa aktarıyoruz
+// Favori filmleri AsyncStorage'ten yükleme
+export const loadFavoriteMovies = () => async (dispatch: any) => {
+  try {
+    console.log('Loading favorite movies from AsyncStorage...');
+    const favoriteMovies = await AsyncStorage.getItem('favoriteMovies'); // AsyncStorage'ten al
+    if (favoriteMovies) {
+      console.log('Favorite movies loaded from AsyncStorage:', favoriteMovies); // Veriyi doğru şekilde aldıysak
+      dispatch(setFavoriteMovies(JSON.parse(favoriteMovies))); // Redux'a yükle
+    } else {
+      console.log('No favorite movies found in AsyncStorage'); // Eğer veri yoksa
+    }
+  } catch (error) {
+    console.error('Error loading favorite movies from AsyncStorage:', error); // Hata varsa
+  }
+};
+
+// Export edilen işlemler
+export const {setFavoriteMovies, addFavorite, removeFavorite} =
+  favoriteMoviesSlice.actions;
+
 export default favoriteMoviesSlice.reducer;
-
