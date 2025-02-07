@@ -62,16 +62,39 @@ const SearchScreen = ({navigation}) => {
 
   const sortMoviesByReleaseDate = (order: 'asc' | 'desc') => {
     const allMovies = fetchMovies();
-    const sortedMovies = allMovies.sort((a, b) => {
-      const dateA = new Date(a.release_date);
-      const dateB = new Date(b.release_date);
 
+    const sortedMovies = allMovies.sort((a, b) => {
+      // Extract the date part from the release_date string (i.e., remove the day of the week)
+      const dateAString = a.release_date.split(', ')[1]; // Take the date part
+      const dateBString = b.release_date.split(', ')[1]; // Take the date part
+
+      // Reformat the date from MM/DD/YYYY to YYYY-MM-DD
+      const reformatDate = (dateStr: string) => {
+        const [month, day, year] = dateStr.split('/');
+        return `${year}-${month}-${day}`; // Convert to YYYY-MM-DD format
+      };
+
+      const dateAFormatted = reformatDate(dateAString);
+      const dateBFormatted = reformatDate(dateBString);
+
+      // Create Date objects from the formatted strings
+      const dateA = new Date(dateAFormatted);
+      const dateB = new Date(dateBFormatted);
+
+      // If the date is invalid, log an error and skip sorting
+      if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+        console.error('Invalid date format:', dateAString, dateBString);
+        return 0; // Avoid sorting on invalid dates
+      }
+
+      // Perform sorting based on the parsed Date object
       if (order === 'desc') {
         return dateB.getTime() - dateA.getTime();
       } else {
         return dateA.getTime() - dateB.getTime();
       }
     });
+
     setMovies(sortedMovies);
   };
 
