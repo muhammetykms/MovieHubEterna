@@ -1,3 +1,5 @@
+// Bu dosya, film ve oyuncu verilerini temsil eden DTO (Data Transfer Object) arayüzlerini içerir.
+
 export interface CastDTO {
   id: string;
   movie_id: number;
