@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     padding: 10,
     alignItems: 'center',
+    justifyContent: 'space-between', // Kart içeriğini ve butonu yatayda hizala
   },
   cardContent: {
     flexDirection: 'row',
@@ -56,8 +57,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 5,
-    alignSelf: 'flex-start',
-    marginLeft: 10,
+    alignSelf: 'flex-end', // Butonu sağ alt köşeye hizala
+    marginTop: 10, // Buton ile içerik arasında boşluk bırak
   },
   removeButtonText: {
     color: '#fff',
