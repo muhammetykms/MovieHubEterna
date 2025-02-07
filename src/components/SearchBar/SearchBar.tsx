@@ -1,13 +1,14 @@
-// components/SearchBar.tsx
 import React, {useState, useEffect} from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, Pressable, Text} from 'react-native';
+import styles from './SearchBar.styles';
 
 type SearchBarProps = {
   onSearch: (query: string) => void;
   onClear: () => void;
+  onFilter: () => void; // Filtre butonuna tıklama işlemi
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({onSearch, onClear}) => {
+const SearchBar: React.FC<SearchBarProps> = ({onSearch, onClear, onFilter}) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
@@ -32,27 +33,11 @@ const SearchBar: React.FC<SearchBarProps> = ({onSearch, onClear}) => {
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
+      <Pressable onPress={onFilter} style={styles.filterButton}>
+        <Text style={styles.filterText}>Filter</Text>
+      </Pressable>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: 10,
-    backgroundColor: '#fff',
-    borderRadius: 25,
-    paddingHorizontal: 10,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    paddingLeft: 10,
-    fontSize: 16,
-    borderRadius: 20,
-    backgroundColor: '#f0f0f0',
-  },
-});
 
 export default SearchBar;

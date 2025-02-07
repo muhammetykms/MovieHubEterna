@@ -17,6 +17,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#f0f0f0',
   },
+  filterButton: {
+    marginLeft: 10,
+    padding: 10,
+  },
+  filterText: {
+    fontSize: 16,
+    color: '#007BFF',
+    fontWeight: '500',
+  },
 });
 
 export default styles;
