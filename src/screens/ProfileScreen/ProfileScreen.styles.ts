@@ -51,16 +51,29 @@ const styles = StyleSheet.create({
   },
   movieItem: {
     marginRight: 16,
+    width: 120, // Allow flexibility for the card size
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 8,
+    elevation: 5, // Card shadow for Android
+    shadowColor: '#000', // iOS shadow
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: {width: 0, height: 2},
   },
   moviePoster: {
-    width: 100,
-    height: 150,
+    width: '100%',
+    height: 180, // Poster image height
     borderRadius: 8,
-    marginBottom: 8,
   },
   movieTitle: {
     fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
+    color: '#333',
+    marginTop: 8,
+    flexWrap: 'wrap', // Allow text to wrap if it's too long
     textAlign: 'center',
   },
   settingItem: {
