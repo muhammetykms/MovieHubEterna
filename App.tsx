@@ -28,12 +28,12 @@ const App = () => {
             <Stack.Screen
               name="CastDetail"
               component={CastDetailScreen}
-              options={{headerShown: false}}
+              options={{headerShown: true, title: 'Oyuncular'}}
             />
             <Stack.Screen
               name="ProfileEdit"
               component={ProfileEditScreen}
-              options={{headerShown: true}}
+              options={{headerShown: true, title: 'Profil Düzenle'}}
             />
           </Stack.Navigator>
         </NavigationContainer>

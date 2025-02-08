@@ -23,7 +23,12 @@ const MovieDetailScreen: React.FC<MovieDetailScreenProps> = ({
     <CastCard
       name={item.name}
       profilePath={item.profile_path}
-      onPress={() => navigation.navigate('CastDetail', {cast: item})}
+      onPress={() =>
+        navigation.navigate('CastDetail', {
+          cast: item,
+          movieTitle: movie.original_title,
+        })
+      }
     />
   );
 

@@ -80,9 +80,8 @@ const HomeScreen = ({navigation}) => {
         ListHeaderComponent={
           <>
             <Text style={[styles.title, {color: theme.colors.text}]}>
-              Top 3
+              Top 3 Filmler
             </Text>
-
             <FlatList
               ref={flatListRef}
               horizontal

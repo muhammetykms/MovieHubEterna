@@ -5,17 +5,21 @@ import {
   TouchableOpacity,
   Text,
   SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage'ı import ediyoruz
-import styles from './ProfileEditScreen.styles'; // Tasarımlar bu dosyaya taşındı
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useTheme} from '../../theme/ThemeProvider'; // Tema desteği eklendi
+import styles from './ProfileEditScreen.styles';
 
 const ProfileEditScreen = ({navigation}) => {
+  const {theme} = useTheme();
   const [userProfile, setUserProfile] = useState({
     name: '',
     email: '',
   });
 
-  // AsyncStorage'dan kullanıcı profil bilgilerini yükleme
   useEffect(() => {
     const loadProfile = async () => {
       try {
@@ -39,12 +43,9 @@ const ProfileEditScreen = ({navigation}) => {
       return;
     }
 
-    // AsyncStorage'a kaydetme
     try {
       await AsyncStorage.setItem('userProfile', JSON.stringify(userProfile));
       console.log('Profile saved to AsyncStorage:', userProfile);
-
-      // Profil düzenleme sayfasına geri git
       navigation.goBack();
     } catch (error) {
       console.error('Profile could not be saved to AsyncStorage:', error);
@@ -52,27 +53,56 @@ const ProfileEditScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.formContainer}>
-        {/* Profil Bilgileri */}
-        <TextInput
-          style={styles.input}
-          placeholder="İsim"
-          value={userProfile.name}
-          onChangeText={text => setUserProfile({...userProfile, name: text})}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="E-posta"
-          value={userProfile.email}
-          onChangeText={text => setUserProfile({...userProfile, email: text})}
-        />
-
-        <TouchableOpacity onPress={handleSaveProfile} style={styles.editButton}>
-          <Text style={styles.editButtonText}>Profili Kaydet</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView
+        style={[styles.container, {backgroundColor: theme.colors.background}]}>
+        <KeyboardAwareScrollView
+          contentContainerStyle={styles.scrollViewContent} // Hata çözümü için eklenen satır
+          resetScrollToCoords={{x: 0, y: 0}}
+          scrollEnabled={true}>
+          <View style={styles.formContainer}>
+            <TextInput
+              style={[
+                styles.input,
+                {color: theme.colors.text, borderColor: theme.colors.primary},
+              ]}
+              placeholder="İsim"
+              placeholderTextColor={theme.colors.placeholder}
+              value={userProfile.name}
+              onChangeText={text =>
+                setUserProfile({...userProfile, name: text})
+              }
+            />
+            <TextInput
+              style={[
+                styles.input,
+                {color: theme.colors.text, borderColor: theme.colors.primary},
+              ]}
+              placeholder="E-posta"
+              placeholderTextColor={theme.colors.placeholder}
+              value={userProfile.email}
+              onChangeText={text =>
+                setUserProfile({...userProfile, email: text})
+              }
+            />
+            <TouchableOpacity
+              onPress={handleSaveProfile}
+              style={[
+                styles.editButton,
+                {backgroundColor: theme.colors.primary},
+              ]}>
+              <Text
+                style={[
+                  styles.editButtonText,
+                  {color: theme.colors.textOnPrimary},
+                ]}>
+                Profili Kaydet
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 

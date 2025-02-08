@@ -62,26 +62,40 @@ const ProfileScreen = ({navigation}) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View
           style={[
             styles.container,
             {backgroundColor: theme.colors.background},
           ]}>
-          {/* Profil Bilgileri - Sadece Tasarım */}
+          {/* Profil Bilgileri - Koyu/Açık Tema Uygulama */}
           <View style={styles.profileHeader}>
-            <Text style={styles.userName}>{userProfile.name}</Text>
-            <Text style={styles.userEmail}>{userProfile.email}</Text>
+            <Text style={[styles.userName, {color: theme.colors.text}]}>
+              {userProfile.name || 'Adınız'}
+            </Text>
+            <Text style={[styles.userEmail, {color: theme.colors.text}]}>
+              {userProfile.email || 'E-posta adresiniz'}
+            </Text>
 
             <TouchableOpacity
-              style={styles.editButton}
+              style={[
+                styles.editButton,
+                {backgroundColor: theme.colors.primary},
+              ]}
               onPress={() => navigation.navigate('ProfileEdit')}>
-              <Text style={styles.editButtonText}>Profili Düzenle</Text>
+              <Text
+                style={[
+                  styles.editButtonText,
+                  {color: theme.colors.textOnPrimary},
+                ]}>
+                Profili Düzenle
+              </Text>
             </TouchableOpacity>
           </View>
 
-          {/* Favori Filmler */}
+          {/* Favori Filmler - Koyu/Açık Tema Uygulama */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={[styles.sectionTitle, {color: theme.colors.text}]}>
@@ -89,11 +103,14 @@ const ProfileScreen = ({navigation}) => {
               </Text>
             </View>
             <FlatList
-              data={favoriteMovies} // Use the state to display favorite movies
+              data={favoriteMovies}
               renderItem={renderMovieItem}
               keyExtractor={item => item.id.toString()}
               horizontal
               showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                backgroundColor: theme.colors.cardBackground,
+              }}
             />
           </View>
         </View>

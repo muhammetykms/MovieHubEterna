@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginTop: 20,
     marginBottom: 10,
+    paddingLeft: 10,
   },
   emptyMessage: {
     fontSize: 18,

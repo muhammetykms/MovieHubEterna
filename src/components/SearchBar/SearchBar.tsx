@@ -29,12 +29,12 @@ const SearchBar: React.FC<SearchBarProps> = ({onSearch, onClear, onFilter}) => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Search for movies"
+        placeholder="Film ara"
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
       <Pressable onPress={onFilter} style={styles.filterButton}>
-        <Text style={styles.filterText}>Filter</Text>
+        <Text style={styles.filterText}>Filtrele</Text>
       </Pressable>
     </View>
   );

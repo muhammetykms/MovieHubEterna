@@ -45,8 +45,18 @@ const MovieDetailHeader: React.FC<MovieDetailHeaderProps> = ({movie}) => {
         <Text style={[styles.voteAverage, {color: theme.colors.primary}]}>
           IMDB Skoru: {movie.vote_average}
         </Text>
-        <TouchableOpacity onPress={shareMovie} style={styles.shareButton}>
-          <Image source={IMAGES.SHARE} style={styles.shareIcon} />
+
+        {/* Paylaşma Butonu */}
+        <TouchableOpacity
+          onPress={shareMovie}
+          style={[
+            styles.shareButton,
+            {backgroundColor: theme.colors.buttonBackground},
+          ]}>
+          <Image
+            source={IMAGES.SHARE}
+            style={[styles.shareIcon, {tintColor: theme.colors.iconColor}]}
+          />
         </TouchableOpacity>
       </View>
     </View>

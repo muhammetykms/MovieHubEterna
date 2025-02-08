@@ -21,9 +21,7 @@ const HeaderMovieCard: React.FC<HeaderMovieCardProps> = ({
       <View
         style={[styles.card, {backgroundColor: theme.colors.cardBackground}]}>
         <Image source={{uri: movie.backdrop_path}} style={styles.poster} />
-        <Text style={[styles.title, {color: theme.colors.text}]}>
-          {movie.original_title}
-        </Text>
+        <Text style={[styles.title]}>{movie.original_title}</Text>
         <Text style={[styles.rating, {color: theme.colors.cardText}]}>
           IMDB: {movie.vote_average}
         </Text>

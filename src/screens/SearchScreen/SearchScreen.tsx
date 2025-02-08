@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, Pressable, Modal, StyleSheet} from 'react-native';
+import {View, Text, FlatList, Pressable, Modal} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MovieDTO} from '../../data/MoviesDTO';
 import MovieCard from '../../components/MovieCard/MovieCard';

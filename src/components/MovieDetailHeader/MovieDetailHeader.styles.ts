@@ -2,47 +2,44 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   header: {
-    marginBottom: 30,
-    padding: 15,
+    padding: 20,
+    borderRadius: 10,
+    position: 'relative',
   },
   backdrop: {
     width: '100%',
-    height: 250,
+    height: 200,
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'left',
+    marginBottom: 5,
   },
   releaseDate: {
     fontSize: 16,
-    marginBottom: 8,
-    textAlign: 'left',
+    marginBottom: 5,
   },
   overview: {
     fontSize: 14,
-    marginBottom: 15,
-    textAlign: 'left',
-    lineHeight: 22,
+    marginBottom: 10,
   },
   voteAverage: {
     fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'left',
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
     marginTop: 10,
   },
   shareButton: {
-    padding: 5,
-    borderRadius: 15,
+    padding: 10,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   shareIcon: {
     width: 20,

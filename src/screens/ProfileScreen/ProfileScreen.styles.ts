@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   },
   userEmail: {
     fontSize: 16,
-    color: '#666',
     marginBottom: 16,
   },
   editButton: {
