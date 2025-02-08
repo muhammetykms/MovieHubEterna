@@ -7,7 +7,7 @@ import {ThemeProvider} from './src/theme/ThemeProvider';
 import TabNavigator from './src/navigation/TabNavigator';
 import MovieDetailScreen from './src/screens/MovieDetailScreen/MovieDetailScreen';
 import CastDetailScreen from './src/screens/CastDetailScreen/CastDetailScreen';
-import ProfileEditScreen from './src/screens/ProfileScreen/ProfileEditScreen';
+import ProfileEditScreen from './src/screens/ProfileEditScreen/ProfileEditScreen';
 import SplashScreen from './src/screens/SplashScreen/SplashScreen';
 
 const Stack = createNativeStackNavigator();
