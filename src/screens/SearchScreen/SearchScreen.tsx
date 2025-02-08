@@ -5,16 +5,17 @@ import {MovieDTO} from '../../data/MoviesDTO';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import {fetchMovies} from '../../services/MovieService';
-import {groupMoviesInPairs} from '../../utils/helpers';
 import {useTheme} from '../../theme/ThemeProvider';
 import styles from './SearchScreen.styles';
 
+// SearchScreen, film arama ve sıralama işlevlerini sağlar.
 const SearchScreen = ({navigation}) => {
   const [movies, setMovies] = useState<MovieDTO[]>([]);
   const [query, setQuery] = useState<string>('');
   const [isModalVisible, setModalVisible] = useState(false);
   const {theme} = useTheme();
 
+  // Arama temizlendiğinde filmleri sıfırlar
   const handleSearch = (query: string) => {
     setQuery(query);
     if (query.trim().length === 0) {
@@ -45,7 +46,7 @@ const SearchScreen = ({navigation}) => {
     } else if (sortBy === 'releaseDate') {
       sortMoviesByReleaseDate(orderType);
     }
-    toggleModal(); // Modal'ı kapat
+    toggleModal();
   };
 
   const sortMoviesByRating = (order: 'asc' | 'desc') => {
@@ -60,34 +61,32 @@ const SearchScreen = ({navigation}) => {
     setMovies(sortedMovies);
   };
 
+
+  // Tarih stringini parse edip alınan fonksiyon
   const sortMoviesByReleaseDate = (order: 'asc' | 'desc') => {
     const allMovies = fetchMovies();
 
     const sortedMovies = allMovies.sort((a, b) => {
-      // Extract the date part from the release_date string (i.e., remove the day of the week)
-      const dateAString = a.release_date.split(', ')[1]; // Take the date part
-      const dateBString = b.release_date.split(', ')[1]; // Take the date part
+      const dateAString = a.release_date.split(', ')[1];
+      const dateBString = b.release_date.split(', ')[1];
 
       // Reformat the date from MM/DD/YYYY to YYYY-MM-DD
       const reformatDate = (dateStr: string) => {
         const [month, day, year] = dateStr.split('/');
-        return `${year}-${month}-${day}`; // Convert to YYYY-MM-DD format
+        return `${year}-${month}-${day}`;
       };
 
       const dateAFormatted = reformatDate(dateAString);
       const dateBFormatted = reformatDate(dateBString);
 
-      // Create Date objects from the formatted strings
       const dateA = new Date(dateAFormatted);
       const dateB = new Date(dateBFormatted);
 
-      // If the date is invalid, log an error and skip sorting
       if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
         console.error('Invalid date format:', dateAString, dateBString);
-        return 0; // Avoid sorting on invalid dates
+        return 0;
       }
 
-      // Perform sorting based on the parsed Date object
       if (order === 'desc') {
         return dateB.getTime() - dateA.getTime();
       } else {
@@ -110,6 +109,14 @@ const SearchScreen = ({navigation}) => {
     </View>
   );
 
+  const groupMoviesInPairs = (movies: MovieDTO[]) => {
+    const groupedMovies = [];
+    for (let i = 0; i < movies.length; i += 2) {
+      groupedMovies.push(movies.slice(i, i + 2));
+    }
+    return groupedMovies;
+  };
+
   const groupedMovies = groupMoviesInPairs(movies);
 
   return (
@@ -118,7 +125,7 @@ const SearchScreen = ({navigation}) => {
       <SearchBar
         onSearch={handleSearch}
         onClear={handleClear}
-        onFilter={toggleModal} // Filtre butonuna basıldığında modal'ı aç
+        onFilter={toggleModal}
       />
 
       {query.length > 0 && (
@@ -134,7 +141,6 @@ const SearchScreen = ({navigation}) => {
         showsVerticalScrollIndicator={false}
       />
 
-      {/* Filtre Modal'ı */}
       <Modal
         visible={isModalVisible}
         animationType="fade"

@@ -1,20 +1,25 @@
+// MovieCard.tsx
+// Bu bileşen anasayfadaki kart yapılarını oluşturur.
 import React from 'react';
-import {useDispatch} from 'react-redux'; // useDispatch import ediyoruz
-import {addFavorite} from '../../redux/favoriteMoviesSlice'; // Aksiyonları import ediyoruz
+import {useDispatch} from 'react-redux';
+import {addFavorite} from '../../redux/slices/favoriteMoviesSlice';
 import styles from './MovieCard.styles';
 import IMAGES from '../../assets';
-import {TouchableOpacity, View, Text, Image} from 'react-native';
+import {TouchableOpacity, View, Text, Image, Dimensions} from 'react-native';
+
+const {width} = Dimensions.get('window');
 
 const MovieCard = ({movie, handleClick}) => {
-  const dispatch = useDispatch(); // Dispatch'i Redux'tan alıyoruz
+  const dispatch = useDispatch();
 
   const handleAddToFavorite = () => {
-    dispatch(addFavorite(movie)); // Redux store'a favori ekliyoruz
+    dispatch(addFavorite(movie));
   };
 
+  const cardWidth = width / 2 - 20;
   return (
     <TouchableOpacity onPress={handleClick}>
-      <View style={styles.card}>
+      <View style={[styles.card, {width: cardWidth}]}>
         <Image
           source={movie.poster_path ? {uri: movie.poster_path} : IMAGES.ERROR}
           style={styles.poster}
@@ -24,7 +29,7 @@ const MovieCard = ({movie, handleClick}) => {
         <TouchableOpacity
           onPress={handleAddToFavorite}
           style={styles.favoriteButton}>
-          <Text style={styles.favoriteButtonText}>Add to Favorite</Text>
+          <Text style={styles.favoriteButtonText}>Favori Ekle</Text>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

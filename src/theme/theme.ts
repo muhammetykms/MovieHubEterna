@@ -1,4 +1,5 @@
 // theme.ts
+// Uygulamanın aydınlık ve karanlık temalarını tanımlar
 export const lightTheme = {
   colors: {
     primary: '#6200ee',
@@ -7,6 +8,7 @@ export const lightTheme = {
     cardBackground: '#f0f0f0',
     cardText: '#000000',
     border: '#cccccc',
+    textOnPrimary: '#ffffff',
   },
 };
 
@@ -18,7 +20,8 @@ export const darkTheme = {
     cardBackground: '#1e1e1e',
     cardText: '#ffffff',
     border: '#333333',
+    textOnPrimary: '#000000',
   },
 };
 
-export type Theme = typeof lightTheme; // Tema türünü tanımlıyoruz
+export type Theme = typeof lightTheme;

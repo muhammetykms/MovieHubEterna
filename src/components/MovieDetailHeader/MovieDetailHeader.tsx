@@ -1,3 +1,5 @@
+// MovieDetailHeader.tsx
+// Film detay sayfasının üst kısmını oluşturan bileşen.
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {MovieDTO} from '../../data/MoviesDTO';

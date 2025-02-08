@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {removeFavorite, addFavorite} from '../../redux/favoriteMoviesSlice';
+import {
+  removeFavorite,
+  addFavorite,
+} from '../../redux/slices/favoriteMoviesSlice';
 import {RootState} from '../../redux/store';
 import {useTheme} from '../../theme/ThemeProvider';
 import {
@@ -15,6 +18,8 @@ import {
 import styles from './FavoriteScreen.styles';
 import {MovieDTO} from '../../data/MoviesDTO';
 
+
+// FavoriteScreen, kullanıcının favori filmlerini listeleyen ekrandır.
 const FavoriteScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const favoriteMovies = useSelector(
@@ -50,7 +55,7 @@ const FavoriteScreen = ({navigation}) => {
       <TouchableOpacity
         onPress={() => handleRemoveFavorite(item.id)}
         style={[styles.removeButton, {backgroundColor: theme.colors.primary}]}>
-        <Text style={styles.removeButtonText}>Remove</Text>
+        <Text style={styles.removeButtonText}>Sil</Text>
       </TouchableOpacity>
     </View>
   );

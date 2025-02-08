@@ -17,6 +17,7 @@ const ThemeContext = createContext<ThemeContextType>({
 
 export const useTheme = () => useContext(ThemeContext);
 
+// Tema durumu sağlayan context ve tema değiştirme işlevini barındıran sağlayıcı bileşeni.
 export const ThemeProvider: React.FC<{children: React.ReactNode}> = ({
   children,
 }) => {

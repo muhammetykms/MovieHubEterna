@@ -1,21 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Image, StyleSheet, Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useTheme} from '../../theme/ThemeProvider'; // Tema sağlayıcıyı içeri aktar
+import {useTheme} from '../../theme/ThemeProvider';
 import IMAGES from '../../assets';
 
+
+
+// SplashScreen, uygulamanın açılış animasyonunu ve yüklenme durumunu gösterir.ƒ
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const {theme} = useTheme(); // Kullanıcı temasını al
-  const [loading, setLoading] = useState(true); // Veri yükleniyor durumu
+  const {theme} = useTheme();
+  const [loading, setLoading] = useState(true);
   const fadeAnim = new Animated.Value(0);
 
   useEffect(() => {
-    // Simüle edilen veri yükleme süresi
+    // Veri yükleme süresi
     setTimeout(() => {
-      setLoading(false); // Veri yüklemesi tamamlandı
-      navigation.replace('Tab'); // Ana ekrana yönlendir
-    }, 3000); // 3 saniye bekle
+      setLoading(false);
+      navigation.replace('Tab');
+    }, 3000);
 
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -28,12 +31,10 @@ const SplashScreen = () => {
     <View
       style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <Animated.View style={{opacity: fadeAnim, alignItems: 'center'}}>
-        {/* Logo */}
         <Image
           source={IMAGES.LOGO}
           style={[styles.logo, {borderColor: theme.colors.primary}]}
         />
-        {/* Yükleniyor yazısını logonun altında ve ortada hizala */}
         <Text style={[styles.text, {color: theme.colors.text}]}>
           {loading ? 'Yükleniyor...' : 'Uygulamanız Başlıyor...'}
         </Text>

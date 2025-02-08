@@ -1,3 +1,5 @@
+// src/screens/ProfileScreen.tsx
+// Kullanıcının profil bilgilerini ve favori filmlerini gösteren ekran
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -7,53 +9,39 @@ import {
   FlatList,
   ScrollView,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native';
 import {useTheme} from '../../theme/ThemeProvider';
 import {MovieDTO} from '../../data/MoviesDTO';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {loadFavoriteMovies, loadUserProfile} from '../../utils/storage';
 import styles from './ProfileScreen.styles';
 
+// ProfileScreen, kullanıcının profil bilgilerini ve favori filmlerini gösterir.
 const ProfileScreen = ({navigation}) => {
   const {theme} = useTheme();
   const [favoriteMovies, setFavoriteMovies] = useState<MovieDTO[]>([]);
-  const [userProfile, setUserProfile] = useState({
-    name: '',
-    email: '',
-  });
+  const [userProfile, setUserProfile] = useState({name: '', email: ''});
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchData = async () => {
+    setRefreshing(true);
+    const movies = await loadFavoriteMovies();
+    if (movies) setFavoriteMovies(movies);
+    const profile = await loadUserProfile();
+    if (profile) setUserProfile(profile);
+    setRefreshing(false);
+  };
 
   useEffect(() => {
-    const loadFavoriteMovies = async () => {
-      try {
-        const storedMovies = await AsyncStorage.getItem('favoriteMovies');
-        if (storedMovies) {
-          setFavoriteMovies(JSON.parse(storedMovies));
-        }
-      } catch (error) {
-        console.error(
-          'Error loading favorite movies from AsyncStorage:',
-          error,
-        );
-      }
-    };
-
-    const loadUserProfile = async () => {
-      try {
-        const storedUserProfile = await AsyncStorage.getItem('userProfile');
-        if (storedUserProfile) {
-          const parsedProfile = JSON.parse(storedUserProfile);
-          setUserProfile(parsedProfile); // Set user profile from AsyncStorage
-        }
-      } catch (error) {
-        console.error('Error loading user profile from AsyncStorage:', error);
-      }
-    };
-
-    loadFavoriteMovies();
-    loadUserProfile();
+    fetchData();
   }, []);
 
   const renderMovieItem = ({item}: {item: MovieDTO}) => (
-    <View style={styles.movieItem}>
+    <View
+      style={[
+        styles.movieItem,
+        {backgroundColor: theme.colors.cardBackground},
+      ]}>
       <Image source={{uri: item.poster_path}} style={styles.moviePoster} />
       <Text style={[styles.movieTitle, {color: theme.colors.text}]}>
         {item.original_title}
@@ -64,21 +52,19 @@ const ProfileScreen = ({navigation}) => {
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.colors.background}]}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={[
-            styles.container,
-            {backgroundColor: theme.colors.background},
-          ]}>
-          {/* Profil Bilgileri - Koyu/Açık Tema Uygulama */}
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={fetchData} />
+        }>
+        <View style={styles.container}>
           <View style={styles.profileHeader}>
             <Text style={[styles.userName, {color: theme.colors.text}]}>
-              {userProfile.name || 'Adınız'}
+              {userProfile.name || 'Adınız'}{' '}
             </Text>
             <Text style={[styles.userEmail, {color: theme.colors.text}]}>
-              {userProfile.email || 'E-posta adresiniz'}
+              {userProfile.email || 'E-posta adresiniz'}{' '}
             </Text>
-
             <TouchableOpacity
               style={[
                 styles.editButton,
@@ -95,7 +81,7 @@ const ProfileScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
 
-          {/* Favori Filmler - Koyu/Açık Tema Uygulama */}
+          {/* Favori Filmler */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={[styles.sectionTitle, {color: theme.colors.text}]}>
@@ -108,9 +94,6 @@ const ProfileScreen = ({navigation}) => {
               keyExtractor={item => item.id.toString()}
               horizontal
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                backgroundColor: theme.colors.cardBackground,
-              }}
             />
           </View>
         </View>

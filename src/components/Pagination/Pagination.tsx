@@ -1,12 +1,15 @@
+// Pagination.tsx
+// Sayfalama noktalarını yöneten bileşen.
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {useTheme} from '../../theme/ThemeProvider'; // Importing useTheme to access the current theme
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {useTheme} from '../../theme/ThemeProvider';
 
 type PaginationProps = {
   items: any[];
   currentIndex: number;
   onDotPress: (index: number) => void;
 };
+const {width} = Dimensions.get('window');
 
 const Pagination: React.FC<PaginationProps> = ({
   items,
@@ -23,10 +26,10 @@ const Pagination: React.FC<PaginationProps> = ({
           key={index}
           style={[
             styles.dot,
-            {color: theme.colors.text}, // Apply dynamic text color based on theme
+            {color: theme.colors.text},
             currentIndex === index && [
               styles.activeDot,
-              {color: theme.colors.primary}, // Apply active dot color from theme
+              {color: theme.colors.primary},
             ],
           ]}
           onPress={() => onDotPress(index)}>
@@ -41,14 +44,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: width * 0.05,
   },
   dot: {
-    fontSize: 45,
-    marginHorizontal: 5,
+    fontSize: width * 0.08,
+    marginHorizontal: width * 0.02,
   },
   activeDot: {
-    fontWeight: 'bold', // Optional, to make the active dot stand out more
+    fontWeight: 'bold',
   },
 });
 

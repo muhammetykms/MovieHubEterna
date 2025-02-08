@@ -1,4 +1,8 @@
-// components/HeaderMovieCard.tsx
+// HeaderMovieCard.tsx
+// Bu bileşen, film başlığı ve IMDb puanı ile film kartı gösterir.
+//  Tıklanabilir bir alan içerir.
+
+
 import React from 'react';
 import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import {MovieDTO} from '../../data/MoviesDTO';

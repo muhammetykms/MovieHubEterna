@@ -1,3 +1,5 @@
+// SearchBar.tsx
+// Kullanıcıların film araması yapabilmesi için arama çubuğu ve filtreleme seçeneği sunar.
 import React, {useState, useEffect} from 'react';
 import {View, TextInput, Pressable, Text} from 'react-native';
 import styles from './SearchBar.styles';

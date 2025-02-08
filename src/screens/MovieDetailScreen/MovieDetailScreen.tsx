@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, ScrollView, FlatList} from 'react-native';
 import {MovieDTO} from '../../data/MoviesDTO';
-import {useTheme} from '../../theme/ThemeProvider'; // Importing theme
-import {SafeAreaView} from 'react-native-safe-area-context'; // Import SafeAreaView
+import {useTheme} from '../../theme/ThemeProvider';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import CastCard from '../../components/CastCard/CastCard';
 import MovieDetailHeader from '../../components/MovieDetailHeader/MovieDetailHeader';
 import styles from './MovieDetailScreen.styles';
@@ -12,12 +12,13 @@ type MovieDetailScreenProps = {
   navigation: any;
 };
 
+// MovieDetailScreen, filmin detaylarını ve oyuncuları gösterir.
 const MovieDetailScreen: React.FC<MovieDetailScreenProps> = ({
   route,
   navigation,
 }) => {
   const {movie} = route.params;
-  const {theme} = useTheme(); // Getting the current theme
+  const {theme} = useTheme();
 
   const renderCastCard = ({item}) => (
     <CastCard

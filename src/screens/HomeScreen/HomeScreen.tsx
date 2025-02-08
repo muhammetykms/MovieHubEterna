@@ -6,15 +6,15 @@ import HeaderMovieCard from '../../components/HeaderMovieCard/HeaderMovieCard';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import Pagination from '../../components/Pagination/Pagination';
 import {fetchMovies} from '../../services/MovieService';
-import {groupMoviesInPairs} from '../../utils/helpers';
 import {useTheme} from '../../theme/ThemeProvider';
-import {useDispatch, useSelector} from 'react-redux'; // useDispatch ve useSelector import ediyoruz
-import {RootState} from '../../redux/store'; // Redux store'dan erişim
-import {addFavorite} from '../../redux/favoriteMoviesSlice'; // Redux aksiyonu
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../redux/store';
+import {addFavorite} from '../../redux/slices/favoriteMoviesSlice';
 import styles from './HomeScreen.styles';
 
 const {width} = Dimensions.get('window');
 
+// HomeScreen, ana ekranı ve film listelerini yönetir.
 const HomeScreen = ({navigation}) => {
   const [movies, setMovies] = useState<MovieDTO[]>([]);
   const [featuredMovies, setFeaturedMovies] = useState<MovieDTO[]>([]);
@@ -31,6 +31,7 @@ const HomeScreen = ({navigation}) => {
   );
   const dispatch = useDispatch();
 
+  // Verileri alıyoruz
   useEffect(() => {
     const fetchData = async () => {
       const allMovies = await fetchMovies(page);
@@ -51,6 +52,7 @@ const HomeScreen = ({navigation}) => {
     navigation.navigate('Details', {movie});
   };
 
+  // Sayfa yükleme işlemi
   const handleLoadMore = () => {
     if (page < totalPages) {
       setPage(prevPage => prevPage + 1);
@@ -62,14 +64,24 @@ const HomeScreen = ({navigation}) => {
     flatListRef.current?.scrollToIndex({index, animated: true});
   };
 
+  // Favori film kontrolü
   const isFavorite = (movieId: number) => {
     return favoriteMovies.some(movie => movie.id === movieId);
   };
 
+  // Favoriye ekleme işlemi
   const toggleFavorite = (movie: MovieDTO) => {
     if (!isFavorite(movie.id)) {
       dispatch(addFavorite(movie)); // Redux üzerinden addFavorite aksiyonunu dispatch ediyoruz
     }
+  };
+
+  const groupMoviesInPairs = (movies: MovieDTO[]) => {
+    const groupedMovies = [];
+    for (let i = 0; i < movies.length; i += 2) {
+      groupedMovies.push(movies.slice(i, i + 2));
+    }
+    return groupedMovies;
   };
 
   return (
@@ -113,7 +125,7 @@ const HomeScreen = ({navigation}) => {
             />
           </>
         }
-        data={groupMoviesInPairs(movies)}
+        data={groupMoviesInPairs(movies)} // Burada groupMoviesInPairs fonksiyonu kullanılıyor
         renderItem={({item}) => (
           <View style={styles.row}>
             {item.map(movie => (

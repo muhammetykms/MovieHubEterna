@@ -10,9 +10,10 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useTheme} from '../../theme/ThemeProvider'; // Tema desteği eklendi
+import {useTheme} from '../../theme/ThemeProvider';
 import styles from './ProfileEditScreen.styles';
 
+// ProfileEditScreen, kullanıcının profil bilgilerini düzenlemesini sağlar.
 const ProfileEditScreen = ({navigation}) => {
   const {theme} = useTheme();
   const [userProfile, setUserProfile] = useState({
@@ -45,10 +46,10 @@ const ProfileEditScreen = ({navigation}) => {
 
     try {
       await AsyncStorage.setItem('userProfile', JSON.stringify(userProfile));
-      console.log('Profile saved to AsyncStorage:', userProfile);
+      console.log('Profil AsyncStorage a kaydedildi:', userProfile);
       navigation.goBack();
     } catch (error) {
-      console.error('Profile could not be saved to AsyncStorage:', error);
+      console.error('Profil AsyncStorage a kaydedilemedi:', error);
     }
   };
 
@@ -57,7 +58,7 @@ const ProfileEditScreen = ({navigation}) => {
       <SafeAreaView
         style={[styles.container, {backgroundColor: theme.colors.background}]}>
         <KeyboardAwareScrollView
-          contentContainerStyle={styles.scrollViewContent} // Hata çözümü için eklenen satır
+          contentContainerStyle={styles.scrollViewContent}
           resetScrollToCoords={{x: 0, y: 0}}
           scrollEnabled={true}>
           <View style={styles.formContainer}>

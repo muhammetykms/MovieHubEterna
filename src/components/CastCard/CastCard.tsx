@@ -1,3 +1,6 @@
+// CastCard.tsx
+// Bu bileşen, oyuncular için bir kart yapısı oluşturur ve
+//  tıklandığında belirtilen işlemi tetikler.
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import styles from './CastCard.styles';
