@@ -5,6 +5,7 @@ const IMAGES = {
   PROFILE: require('./user.png'),
   ERROR: require('./error.png'),
   LOGO: require('./logo.png'),
+  SHARE: require('./share.png'),
 };
 
 export default IMAGES;

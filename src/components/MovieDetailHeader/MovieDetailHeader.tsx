@@ -1,7 +1,9 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {MovieDTO} from '../../data/MoviesDTO';
 import {useTheme} from '../../theme/ThemeProvider'; // Importing theme
+import IMAGES from '../../assets'; // IMAGES nesnesini import ettik
+import Share from 'react-native-share'; // Paylaşma modülünü içeri aktar
 import styles from './MovieDetailHeader.styles';
 
 type MovieDetailHeaderProps = {
@@ -10,6 +12,20 @@ type MovieDetailHeaderProps = {
 
 const MovieDetailHeader: React.FC<MovieDetailHeaderProps> = ({movie}) => {
   const {theme} = useTheme(); // Getting the current theme
+
+  const shareMovie = async () => {
+    const shareOptions = {
+      title: 'Film Paylaş',
+      message: `Filmin Adını Paylaşmak İster misiniz? ${movie.original_title}`,
+      url: '', // URL eklemek isterseniz burada paylaşılacak bir link verebilirsiniz
+    };
+
+    try {
+      await Share.open(shareOptions); // Paylaşımı başlat
+    } catch (error) {
+      console.log('Paylaşım hatası:', error);
+    }
+  };
 
   return (
     <View
@@ -24,9 +40,15 @@ const MovieDetailHeader: React.FC<MovieDetailHeaderProps> = ({movie}) => {
       <Text style={[styles.overview, {color: theme.colors.text}]}>
         {movie.overview}
       </Text>
-      <Text style={[styles.voteAverage, {color: theme.colors.primary}]}>
-        IMDB Skoru: {movie.vote_average}
-      </Text>
+
+      <View style={styles.footer}>
+        <Text style={[styles.voteAverage, {color: theme.colors.primary}]}>
+          IMDB Skoru: {movie.vote_average}
+        </Text>
+        <TouchableOpacity onPress={shareMovie} style={styles.shareButton}>
+          <Image source={IMAGES.SHARE} style={styles.shareIcon} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

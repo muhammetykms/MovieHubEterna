@@ -33,6 +33,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
   },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 10,
+  },
+  shareButton: {
+    padding: 5,
+    borderRadius: 15,
+  },
+  shareIcon: {
+    width: 20,
+    height: 20,
+  },
 });
 
 export default styles;
