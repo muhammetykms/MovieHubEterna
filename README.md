@@ -1,97 +1,74 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# MovieHub Eterna - React Native Uygulaması
 
-# Getting Started
+**MovieHub Eterna** uygulaması, React Native kullanılarak geliştirilmiş bir mobil uygulamadır. Bu uygulama, kullanıcıların film verilerini görselleştirmesini sağlar. Android ve iOS platformlarında çalışacak şekilde yapılandırılmıştır.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Bu proje, teknkik mülakat için hazırlanmıştır.
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Kullanılan Teknolojiler
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- React Native: Mobil uygulama geliştirme platformu.
+- Redux Toolkit: Uygulama durumu yönetimi.
+- Styled Components: UI bileşenleri için stil oluşturma.
+- React Navigation: Ekranlar arasında gezinti için.
+- React Native Share: Film paylaşımı için native modül.
+- React Context : Temalar için kullanıldı
 
-```sh
-# Using npm
-npm start
+---
 
-# OR using Yarn
-yarn start
-```
+## Gereksinimler
 
-## Step 2: Build and run your app
+Uygulamayı çalıştırabilmek için aşağıdaki yazılımlara ihtiyacınız olacaktır:
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+- **Node.js** ve **npm** veya **Yarn**
+- **Android Studio** (Android için)
+- **Xcode** (iOS için)
+- **CocoaPods** (iOS bağımlılıkları için)
+- **Git** (Kaynak kodunu almak için)
 
-### Android
+---
 
-```sh
-# Using npm
-npm run android
+## Kurulum ve Yapılandırma
 
-# OR using Yarn
-yarn android
-```
+### 1. Bağımlılıkları Yükleyin
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+Projenin kök dizininde aşağıdaki komutu çalıştırarak tüm bağımlılıkları yükleyin:
 
 ```sh
-bundle install
+npm install
 ```
 
-Then, and every time you update your native dependencies, run:
+### 2. Android için
+
+Uygulamayı derleyin ve çalıştırın:
+```sh
+npx react-native run-android
+```
+### 3. iOS için
+
+Uygulamayı derleyin ve çalıştırın:
 
 ```sh
-bundle exec pod install
+cd ios
+pod install
+cd ..
 ```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
 ```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+npx react-native run-ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Apk Dosyası Yükleme Linki
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+> **APK: [APK Dosyasını İndir](https://drive.google.com/file/d/1Mb7g7lTvGy22n2OsJg89L5Uj0S9fPa81/view?usp=drive_link)
 
-## Step 3: Modify your app
 
-Now that you have successfully run the app, let's make changes!
+## Uygulama Videosu (Android)
+![Simülasyon](./androidsimulator.gif)
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Uygulama Videosu (iOS)
+![Simülasyon](./iOSsimulator.gif)
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
 
-## Congratulations! :tada:
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
