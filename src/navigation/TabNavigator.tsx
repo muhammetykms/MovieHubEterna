@@ -1,3 +1,5 @@
+// TabNavigator.tsx
+// Bütün bottom tab işlemleri buradan gerçekleştirilir
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
@@ -6,7 +8,7 @@ import FavoriteScreen from '../screens/FavoriteScreen/FavoriteScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import IMAGES from '../assets';
 import {Image} from 'react-native';
-import {useTheme} from '../theme/ThemeProvider'; // Import the useTheme hook
+import {useTheme} from '../theme/ThemeProvider';
 
 // Bottom tab navigator oluşturuluyor ve Bottom tab navigator işlemleri yapıldı.
 const Tab = createBottomTabNavigator();
@@ -20,11 +22,11 @@ const TabNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.colors.primary, // Active tab icon color
-        tabBarInactiveTintColor: theme.colors.text, // Inactive tab icon color
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.text,
         tabBarStyle: {
-          backgroundColor: theme.colors.cardBackground, // Background color for bottom tab
-          borderTopWidth: 0, // Optional: Remove the top border
+          backgroundColor: theme.colors.cardBackground,
+          borderTopWidth: 0,
         },
       }}>
       <Tab.Screen
