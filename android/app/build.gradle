@@ -95,7 +95,7 @@ android {
         release {
             storeFile file('/Users/muhammetyikmis/Desktop/React/test/MovieHubEterna/my-release-key.keystore')  // Keystore dosyanızın yolu
             storePassword '365119'  
-            keyAlias 'my-key-alias'  
+            keyAlias 'mykey'  
             keyPassword '365119'  
 
         }
