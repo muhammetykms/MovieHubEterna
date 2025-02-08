@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
-import favoriteMoviesReducer from './favoriteMoviesSlice';
-import {loadFavoriteMovies} from './favoriteMoviesSlice';
+import favoriteMoviesReducer, {
+  loadFavoritesAsync,
+} from './slices/favoriteMoviesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -9,4 +10,4 @@ export const store = configureStore({
 });
 
 // Uygulama açıldığında favori filmleri yükleyelim
-store.dispatch(loadFavoriteMovies());
+store.dispatch(loadFavoritesAsync());
