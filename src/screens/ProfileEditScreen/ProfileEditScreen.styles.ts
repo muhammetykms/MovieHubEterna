@@ -1,4 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -7,32 +9,32 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: width * 0.05,
   },
   formContainer: {
     backgroundColor: 'transparent',
     borderRadius: 10,
-    padding: 20,
-    elevation: 3, // Android için gölge
-    shadowColor: '#000', // iOS için gölge
+    padding: width * 0.05,
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   input: {
-    height: 50,
+    height: width * 0.12,
     borderWidth: 1,
     borderRadius: 8,
-    paddingLeft: 15,
-    marginBottom: 15,
+    paddingLeft: width * 0.03,
+    marginBottom: width * 0.04,
   },
   editButton: {
     borderRadius: 10,
-    paddingVertical: 12,
+    paddingVertical: width * 0.03,
     alignItems: 'center',
   },
   editButtonText: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontWeight: 'bold',
   },
 });

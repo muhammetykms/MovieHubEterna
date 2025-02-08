@@ -1,4 +1,3 @@
-// screens/HomeScreen/HomeScreen.styles.ts
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({

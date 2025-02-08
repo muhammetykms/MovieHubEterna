@@ -1,18 +1,20 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   card: {
     alignItems: 'center',
-    marginRight: 15,
+    marginRight: width * 0.04,
   },
   profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 5,
+    width: width * 0.2,
+    height: width * 0.2,
+    borderRadius: width * 0.1,
+    marginBottom: width * 0.02,
   },
   name: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     color: '#fff',
     textAlign: 'center',
   },

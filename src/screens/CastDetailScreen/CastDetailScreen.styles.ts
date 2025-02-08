@@ -1,39 +1,41 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: width * 0.05,
     backgroundColor: '#f2f2f2',
   },
   header: {
     alignItems: 'center',
-    marginBottom: 30,
-    marginTop: 20,
+    marginBottom: width * 0.08,
+    marginTop: width * 0.05,
   },
   profileImage: {
-    width: 180,
-    height: 180,
-    borderRadius: 90,
+    width: width * 0.45,
+    height: width * 0.45,
+    borderRadius: width * 0.225,
     borderWidth: 4,
     borderColor: '#fff',
-    marginBottom: 20,
+    marginBottom: width * 0.05,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 5},
     shadowOpacity: 0.2,
     shadowRadius: 10,
   },
   name: {
-    fontSize: 28,
+    fontSize: width * 0.07,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 10,
+    marginBottom: width * 0.03,
     textAlign: 'center',
   },
   details: {
     borderRadius: 10,
-    padding: 20,
-    marginBottom: 30,
+    padding: width * 0.05,
+    marginBottom: width * 0.08,
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
@@ -41,18 +43,18 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   detailTitle: {
-    fontSize: 18,
+    fontSize: width * 0.045,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: width * 0.02,
   },
   detailText: {
-    fontSize: 16,
-    marginBottom: 15,
+    fontSize: width * 0.04,
+    marginBottom: width * 0.04,
   },
   additionalInfo: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: width * 0.05,
     fontStyle: 'italic',
   },
 });

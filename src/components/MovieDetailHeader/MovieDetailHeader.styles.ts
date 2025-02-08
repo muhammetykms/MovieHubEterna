@@ -1,32 +1,34 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   header: {
-    padding: 20,
+    padding: width * 0.05,
     borderRadius: 10,
     position: 'relative',
   },
   backdrop: {
     width: '100%',
-    height: 200,
+    height: width * 0.5,
     borderRadius: 10,
     marginBottom: 10,
   },
   title: {
-    fontSize: 24,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
     marginBottom: 5,
   },
   releaseDate: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     marginBottom: 5,
   },
   overview: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     marginBottom: 10,
   },
   voteAverage: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontWeight: 'bold',
   },
   footer: {
@@ -42,8 +44,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   shareIcon: {
-    width: 20,
-    height: 20,
+    width: width * 0.05,
+    height: width * 0.05,
   },
 });
 

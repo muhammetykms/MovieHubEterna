@@ -1,4 +1,3 @@
-// components/HeaderMovieCard/HeaderMovieCard.styles.ts
 import {StyleSheet, Dimensions} from 'react-native';
 
 const {width} = Dimensions.get('window');
@@ -13,27 +12,27 @@ const styles = StyleSheet.create({
   },
   poster: {
     width: '100%',
-    height: 350,
+    height: width * 0.6,
     borderRadius: 15,
   },
   title: {
-    fontSize: 22,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
     textAlign: 'center',
     paddingVertical: 10,
     color: '#fff',
     zIndex: 2,
     position: 'absolute',
-    bottom: 30,
+    bottom: width * 0.1,
     left: '5%',
   },
   rating: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     color: '#fff',
     marginBottom: 10,
     zIndex: 2,
     position: 'absolute',
-    bottom: 10,
+    bottom: width * 0.02,
     left: '5%',
   },
 });
